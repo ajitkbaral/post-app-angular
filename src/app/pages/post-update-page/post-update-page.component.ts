@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/services/post.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-update-page',
@@ -13,12 +15,19 @@ export class PostUpdatePageComponent implements OnInit {
 
   post: Post;
 
-  constructor(private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private postService: PostService, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    this.postService.getPost('5').subscribe(d => {
-      this.post = d.data;
-    });
+
+    if (this.authService.isLoggedIn()) {
+      const idParam = this.route.snapshot.paramMap.get('id');
+      this.postService.getPost(idParam).subscribe(d => {
+        this.post = d.data;
+      });
+    } else {
+      this.authService.redirectToLoginPage();
+    }
+
   }
 
 }

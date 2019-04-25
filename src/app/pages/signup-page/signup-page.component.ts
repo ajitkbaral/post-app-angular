@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -9,9 +10,12 @@ export class SignupPageComponent implements OnInit {
 
   page = 'signup';
 
-  constructor() { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.authService.redirectAfterLogin();
+    }
   }
 
 }

@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { DataService } from 'src/app/services/data.service';
-import { AngularTokenService } from 'angular-token';
-import { Router } from '@angular/router';
+import { Router, Event, NavigationEnd } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -14,10 +12,15 @@ export class NavComponent implements OnInit {
 
   @Input() title;
   searchedText: string;
+  searchBox = false;
 
   constructor(private dataService: DataService, private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    this.router.events.subscribe(
+      (event: Event) =>
+        event instanceof NavigationEnd && this.displaySearchBar(event.url)
+    );
   }
 
   isLoggedIn(): boolean {
@@ -29,11 +32,22 @@ export class NavComponent implements OnInit {
   }
 
   logOut() {
-    this.authService.logout();
+    this.authService.logout().subscribe(res => {
+      this.authService.redirectToLoginPage();
+    });
   }
 
   search() {
     this.dataService.changeSearchedText(this.searchedText);
+  }
+
+  displaySearchBar(url: string) {
+    console.log(url);
+    if (url === '/posts') {
+      this.searchBox = true;
+    } else {
+      this.searchBox = false;
+    }
   }
 
 }

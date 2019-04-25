@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/services/post.service';
 import { Post } from 'src/app/models/Post';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-post-page',
@@ -16,13 +17,19 @@ export class PostPageComponent implements OnInit {
 
   post: Post;
 
-  constructor(private route: ActivatedRoute, private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private postService: PostService, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    this.postService.getPost(idParam).subscribe(d => {
+
+    if (this.authService.isLoggedIn()) {
+      const idParam = this.route.snapshot.paramMap.get('id');
+      this.postService.getPost(idParam).subscribe(d => {
       this.post = d.data;
-    });
+      });
+    } else {
+      this.authService.redirectToLoginPage();
+    }
+
   }
 
 }

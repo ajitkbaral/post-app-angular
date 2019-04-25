@@ -29,10 +29,8 @@ export class AuthenticationService {
     });
   }
 
-  logout() {
-    this.redirectUrl = undefined;
-    this.tokenService.signOut();
-    this.router.navigate(['/login']);
+  logout(): Observable<any> {
+    return this.tokenService.signOut();
   }
 
   isLoggedIn(): boolean {
@@ -43,6 +41,10 @@ export class AuthenticationService {
     const redirectTo = this.redirectUrl ? this.redirectUrl : '/posts';
     this.redirectUrl = undefined;
     this.router.navigate([redirectTo]);
+  }
+
+  redirectToLoginPage(): void {
+    this.router.navigate(['/login']);
   }
 
 }

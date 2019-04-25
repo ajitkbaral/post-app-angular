@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
-import { HttpClient } from '@angular/common/http';
-import { AngularTokenService } from 'angular-token';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-posts',
@@ -16,24 +15,29 @@ export class PostsComponent implements OnInit {
   filteredPosts: Post[];
 
 
-  constructor(private dataService: DataService, private postService: PostService, private tokenService: AngularTokenService) { }
+  constructor(private dataService: DataService, private postService: PostService, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    this.postService.getPosts().subscribe(d => {
-      this.posts = d.data;
-      this.filteredPosts = this.posts;
-    });
 
-
-
-    this.dataService.currentSearch.subscribe(text => {
-      if (text !== '') {
-        this.searchPost(text);
-      } else {
+    if (this.authService.isLoggedIn()) {
+      this.postService.getPosts().subscribe(d => {
+        this.posts = d.data;
         this.filteredPosts = this.posts;
-      }
+      });
 
-    });
+      this.dataService.currentSearch.subscribe(text => {
+        if (text !== '') {
+          this.searchPost(text);
+        } else {
+          this.filteredPosts = this.posts;
+        }
+
+      });
+    } else {
+      this.authService.redirectToLoginPage();
+    }
+
+
 
 
   }

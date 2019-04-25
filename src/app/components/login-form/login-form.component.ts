@@ -26,11 +26,11 @@ export class LoginFormComponent implements OnInit {
         this.authService.redirectAfterLogin();
       }
     },
-    err => {
-      console.log(err);
-    });
+      err => {
+        console.log(err);
+      });
 
-    }
+  }
 
   signUp() {
     this.authService.signUp(this.email, this.password).subscribe(res => {
@@ -39,9 +39,9 @@ export class LoginFormComponent implements OnInit {
         this.router.navigate(['posts']);
       }
     },
-    err => {
-      console.log(err);
-    });
+      err => {
+        console.log(err);
+      });
   }
 
 }
