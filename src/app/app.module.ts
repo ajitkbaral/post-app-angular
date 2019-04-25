@@ -14,6 +14,8 @@ import { PostFormComponent } from './components/post-form/post-form.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { PostUpdatePageComponent } from './pages/post-update-page/post-update-page.component';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     PostFormComponent,
     ProfileComponent,
     LoginFormComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    PostUpdatePageComponent,
+    SignupPageComponent
   ],
   imports: [
     BrowserModule,

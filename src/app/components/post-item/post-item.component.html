@@ -1,9 +1,9 @@
-<div class="card m-2">
+<div class="card m-2" *ngIf="post">
     <div class="card-body">
       <h5 class="card-title">{{post.title}}</h5>
       <p class="card-text">{{post.description}}</p>
       <button class="btn btn-sm btn-primary" (click)="viewPost(post.id)" *ngIf="component == 'post-item'">View post</button>
       <button class="btn btn-sm btn-success" (click)="updatePost()" *ngIf="component == 'post-page'">Update</button>
-      <button class="btn btn-sm btn-danger float-right" (click)="deletePost(post.id)" *ngIf="component == 'post-page'">Delete</button>
+      <button class="btn btn-sm btn-danger float-right" (click)="deletePost()" *ngIf="component == 'post-page'">Delete</button>
     </div>
   </div>

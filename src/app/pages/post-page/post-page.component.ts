@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PostService } from 'src/app/services/post.service';
+import { Post } from 'src/app/models/Post';
 
 @Component({
   selector: 'app-post-page',
@@ -9,13 +12,17 @@ export class PostPageComponent implements OnInit {
 
   component = 'post-page';
 
-  constructor() { }
+  // @Output() getPost: EventEmitter<any> = new EventEmitter();
+
+  post: Post;
+
+  constructor(private route: ActivatedRoute, private postService: PostService) { }
 
   ngOnInit() {
-  }
-
-  search() {
-    console.log('i am here');
+    const idParam = this.route.snapshot.paramMap.get('id');
+    this.postService.getPost(idParam).subscribe(d => {
+      this.post = d.data;
+    });
   }
 
 }

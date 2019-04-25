@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a [routerLink]="['/posts']" class="nav-link">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a [routerLink]="['/posts/new']" class="nav-link">
@@ -31,7 +31,9 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search a post" name="search" [(ngModel)] = "searchedText" (keyup)="search()">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" routerLink="/logout" *ngIf="isLoggedIn()" (click)="logOut()">Logout</button>
+      <button class="btn btn-outline-success my-2 my-sm-0 mr-2" routerLink="/login" *ngIf="isLoggedOut()">Sign In</button>
+      <button class="btn btn-outline-primary my-2 my-sm-0" routerLink="/signup" *ngIf="isLoggedOut()">Sign Up</button>
     </form>
   </div>
 </nav>

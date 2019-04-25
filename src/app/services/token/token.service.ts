@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-const httpHeaderOptions ={
+const httpHeaderOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
   })
-}
+};
+
+const url = 'http://localhost:3000';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +24,21 @@ export class TokenService {
     const user = {
       email,
       password
-    }
+    };
 
-    return this.http.post<any>('http://192.168.0.106:3000/auth/sign_in', user, httpHeaderOptions);
+    const signInUrl = `${url}/sign_in`;
+
+    return this.http.post<any>(signInUrl, user, httpHeaderOptions);
+  }
+
+  signUp(email: string, password: string): Observable<any> {
+    const signUpUrl = `${url}/auth`;
+
+    const user = {
+      email,
+      password
+    };
+
+    return this.http.post<any>(signUpUrl, user, httpHeaderOptions);
   }
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { DataService } from 'src/app/services/data.service';
+import { PostService } from 'src/app/services/post.service';
+import { HttpClient } from '@angular/common/http';
+import { AngularTokenService } from 'angular-token';
 
 @Component({
   selector: 'app-posts',
@@ -13,21 +16,15 @@ export class PostsComponent implements OnInit {
   filteredPosts: Post[];
 
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private postService: PostService, private tokenService: AngularTokenService) { }
 
   ngOnInit() {
-    this.posts = [
-      {
-        id: 1,
-        title: 'Post 1',
-        description: 'This is the simple post 1'
-      },
-      {
-        id: 2,
-        title: 'Post 2',
-        description: 'This is the simple post 2'
-      }
-    ];
+    this.postService.getPosts().subscribe(d => {
+      this.posts = d.data;
+      this.filteredPosts = this.posts;
+    });
+
+
 
     this.dataService.currentSearch.subscribe(text => {
       if (text !== '') {
@@ -37,6 +34,7 @@ export class PostsComponent implements OnInit {
       }
 
     });
+
 
   }
 
