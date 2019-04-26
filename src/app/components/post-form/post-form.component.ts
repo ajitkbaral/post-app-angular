@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { PostService } from 'src/app/services/post.service';
-import { Title } from '@angular/platform-browser';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Post } from 'src/app/models/Post';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
