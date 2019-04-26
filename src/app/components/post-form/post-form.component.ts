@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class PostFormComponent implements OnInit {
 
   rForm: FormGroup;
+
   @Input() action = 'create';
 
   @Input() post: Post;
