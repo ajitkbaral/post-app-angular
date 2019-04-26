@@ -1,10 +1,13 @@
-<form class="form-signin" >
+<form class="form-signin" [formGroup]="rForm">
   <h1 class="h3 mb-3 font-weight-normal" *ngIf="page == 'login'">Please sign in</h1>
   <h1 class="h3 mb-3 font-weight-normal" *ngIf="page == 'signup'">Please sign up</h1>
   <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus [(ngModel)]="email" name='email'>
+  <input type="text" id="inputEmail" class="form-control" placeholder="Email address" formControlName ='email' name='email'>
+  <div *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched" class='alert alert-danger'>{{ emailAlert }}</div>
   <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required [(ngModel)]="password" name="password">
-  <button class="btn btn-lg btn-success btn-block" *ngIf="page == 'login'" (click)="signIn()">Sign in</button>
-  <button class="btn btn-lg btn-primary btn-block" *ngIf="page == 'signup'" (click)="signUp()">Sign up</button>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName ="password">
+  <div *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched" class='alert alert-danger'>Password should be atleast 8 characters</div>
+  <button class="btn btn-lg btn-success btn-block" *ngIf="page == 'login'" (click)="signIn(rForm.value)" [disabled]="!rForm.valid">Sign in</button>
+  <button class="btn btn-lg btn-primary btn-block" *ngIf="page == 'signup'" (click)="signUp(rForm.value)" [disabled]="!rForm.valid">Sign up</button>
 </form>
+

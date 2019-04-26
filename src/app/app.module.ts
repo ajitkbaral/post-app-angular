@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularTokenModule } from 'angular-token';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,22 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { PostUpdatePageComponent } from './pages/post-update-page/post-update-page.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
+import { Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+
+const myRoots: Routes = [
+  { path: 'login', component: LoginPageComponent },
+  { path: 'signup', component: SignupPageComponent },
+  { path: 'posts', component: PostsComponent, pathMatch: 'full' , canActivate:
+  [AuthGuard]},
+  { path: '', component: LoginPageComponent },
+  { path: 'posts/new', component: PostFormComponent, canActivate: [AuthGuard] },
+  { path: 'posts/:id', component: PostPageComponent, canActivate: [AuthGuard] },
+  { path: 'posts/:id/edit', component: PostUpdatePageComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+];
+
+
 
 @NgModule({
   declarations: [
@@ -38,7 +54,8 @@ import { SignupPageComponent } from './pages/signup-page/signup-page.component';
     AngularTokenModule.forRoot({
       apiBase: 'http://localhost:3000',
     }),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [ AngularTokenModule ],
   bootstrap: [AppComponent]

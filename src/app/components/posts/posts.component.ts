@@ -13,6 +13,8 @@ export class PostsComponent implements OnInit {
 
   posts: Post[];
   filteredPosts: Post[];
+  loading = true;
+  noDataFound = false;
 
 
   constructor(private dataService: DataService, private postService: PostService, private authService: AuthenticationService) { }
@@ -23,6 +25,12 @@ export class PostsComponent implements OnInit {
       this.postService.getPosts().subscribe(d => {
         this.posts = d.data;
         this.filteredPosts = this.posts;
+        this.loading = false;
+      },
+      err => {
+        console.log(err);
+        this.loading = false;
+        this.noDataFound = true;
       });
 
       this.dataService.currentSearch.subscribe(text => {

@@ -1,9 +1,17 @@
+
+<div class="alert alert-danger" *ngIf="deleteClick">
+  Do you want to delete?
+  <div class='float-right'>
+    <button class="btn btn-danger btn-sm" (click)="deletePost()">Yes</button>
+    <button class="btn btn-default btn-sm" (click)="dontDelete()">No</button>
+  </div>
+</div>
 <div class="card m-2" *ngIf="post">
     <div class="card-body">
       <h5 class="card-title">{{post.title}}</h5>
       <p class="card-text">{{post.description}}</p>
       <button class="btn btn-sm btn-primary" (click)="viewPost(post.id)" *ngIf="component == 'post-item'">View post</button>
       <button class="btn btn-sm btn-success" (click)="updatePost()" *ngIf="component == 'post-page'">Update</button>
-      <button class="btn btn-sm btn-danger float-right" (click)="deletePost()" *ngIf="component == 'post-page'">Delete</button>
+      <button class="btn btn-sm btn-danger float-right" (click)="askBeforeDelete()" *ngIf="component == 'post-page'">Delete</button>
     </div>
   </div>

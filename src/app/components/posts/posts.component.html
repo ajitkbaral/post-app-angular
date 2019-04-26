@@ -1,3 +1,5 @@
+<p *ngIf="loading">Loading...</p>
+<p *ngIf="noDataFound">Data not found. Please try again later.</p>
 <div *ngFor="let post of filteredPosts">
   <app-post-item [post]="post"></app-post-item>
 </div>

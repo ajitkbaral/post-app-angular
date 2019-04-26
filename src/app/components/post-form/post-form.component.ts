@@ -4,6 +4,7 @@ import { PostService } from 'src/app/services/post.service';
 import { Title } from '@angular/platform-browser';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Post } from 'src/app/models/Post';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-post-form',
@@ -13,11 +14,18 @@ import { Post } from 'src/app/models/Post';
 
 export class PostFormComponent implements OnInit {
 
-  constructor(private router: Router, private postService: PostService) { }
-
+  rForm: FormGroup;
   @Input() action = 'create';
 
   @Input() post: Post;
+
+
+  constructor(private router: Router, private postService: PostService, private fb: FormBuilder) {
+    this.rForm = fb.group({
+      title: [null, Validators.required],
+      description: [null, Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.post = {

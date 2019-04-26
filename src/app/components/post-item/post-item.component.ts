@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/services/post.service';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-post-item',
@@ -14,6 +13,8 @@ export class PostItemComponent implements OnInit {
   @Input() post: Post;
 
   @Input() component = 'post-item';
+
+  deleteClick = false;
 
   constructor(private router: Router, private postService: PostService) { }
 
@@ -29,12 +30,22 @@ export class PostItemComponent implements OnInit {
     this.router.navigate(['posts', this.post.id, 'edit']);
   }
 
+
+
   deletePost() {
     this.postService.deletePost(this.post.id).subscribe(d => {
       if (d.status === 'success') {
         this.router.navigate(['posts']);
       }
     });
+  }
+
+  askBeforeDelete() {
+    this.deleteClick = true;
+  }
+
+  dontDelete() {
+    this.deleteClick = false;
   }
 
 
