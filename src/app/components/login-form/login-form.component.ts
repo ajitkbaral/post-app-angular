@@ -46,14 +46,13 @@ export class LoginFormComponent implements OnInit {
   signUp(login) {
     this.email = login.email;
     this.password = login.password;
-    this.authService.signUp(this.email, this.password).subscribe(res => {
-      if (res.status === 'success') {
-        this.router.navigate(['posts']);
-      }
-    },
-      err => {
-        console.log(err);
-      });
+
+    const form = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.formSubmit.emit(form);
   }
 
 }
