@@ -3,7 +3,6 @@ import { Post } from 'src/app/models/Post';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -44,8 +43,6 @@ export class PostsComponent implements OnInit {
     } else {
       this.authService.redirectToLoginPage();
     }
-
-
 
 
   }

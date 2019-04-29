@@ -6,7 +6,7 @@
     <button class="btn btn-default btn-sm" (click)="dontDelete()">No</button>
   </div>
 </div>
-<div class="card m-2" *ngIf="post">
+<div class="card m-2" *ngIf="post" @slide>
     <div class="card-body">
       <h5 class="card-title">{{post.title}}</h5>
       <p class="card-text">{{post.description}}</p>
