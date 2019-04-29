@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +17,8 @@ export class LoginFormComponent implements OnInit {
 
   @Input() page = 'login';
 
+  @Output() formSubmit = new EventEmitter();
+
 
   constructor(private authService: AuthenticationService, private router: Router, private fb: FormBuilder) {
     this.rForm = fb.group({
@@ -32,15 +34,13 @@ export class LoginFormComponent implements OnInit {
   signIn(login) {
     this.email = login.email;
     this.password = login.password;
-    this.authService.signIn(this.email, this.password).subscribe(res => {
 
-      if (res.status === 200) {
-        this.authService.redirectAfterLogin();
-      }
-    },
-      err => {
-        console.log(err.status);
-      });
+    const form = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.formSubmit.emit(form);
   }
 
   signUp(login) {

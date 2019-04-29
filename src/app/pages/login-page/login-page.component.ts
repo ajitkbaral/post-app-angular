@@ -16,4 +16,17 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
+  signIn(form) {
+    this.authService.signIn(form.email, form.password).subscribe(res => {
+
+      if (res.status === 200) {
+        this.authService.redirectAfterLogin();
+      }
+    },
+      err => {
+        console.log(err.status);
+      });
+
+  }
+
 }
